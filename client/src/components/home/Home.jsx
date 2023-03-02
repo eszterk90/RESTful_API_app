@@ -6,14 +6,14 @@ import Login from '../authentication/Login'
 
 function Home() {
 
-const {currentUser} = useContext(UserContext);
+const {currentUser, setNotifications} = useContext(UserContext);
 
   return (
     <div>
     {Object.keys(currentUser).length > 0 ? <Dashboard/> 
     :
     <>
-    <Link to='/register'><button className="btn btn-secondary">Sign up</button></Link>
+    <Link to='/register'><button className="btn btn-secondary" onClick={() => setNotifications([])}>Sign up</button></Link>
     <Login/>
     </>
     }

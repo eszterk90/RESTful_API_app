@@ -36,7 +36,7 @@ export const UserProvider = ({children}) => {
                 }
     
                 setNotifications([...notifications, response.data.notification])                   
-            })
+            }).catch(err => console.log(err))
     }
 
     const logout = () => {
@@ -80,10 +80,30 @@ export const UserProvider = ({children}) => {
             .then(response => {
                 setCurrentUser(response.data)
             })
-            .catch(err => console.log(err))
+            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
     }
 
-    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername};
+    const updateBirthday = (e) => {
+        e.preventDefault();
+        axios.patch('http://localhost:5001/user/updatebirthday', formData, {withCredentials: true})
+            .then(response => {
+                setCurrentUser(response.data)
+            })
+            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+
+    }
+
+    const updatePhoneNumber = (e) => {
+        e.preventDefault();
+        axios.patch('http://localhost:5001/user/updatephone', formData, {withCredentials: true})
+            .then(response => {
+                setCurrentUser(response.data)
+            })
+            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+
+    }
+
+    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber};
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };

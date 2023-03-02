@@ -5,9 +5,7 @@ const { validationResult } = require("express-validator");
 
 const createUser = (req, res) => {
     const errors = validationResult(req);
-    console.log(errors)
     if(!errors.isEmpty()) {
-        console.log(errors)
         res.status(400).json({errors: errors.array()})
     }else {
         const newUser = req.body;
@@ -33,19 +31,17 @@ const login = (req, res) => {
                     loginData.password,
                     result.password,
                     (err, response) => {
-                        if(response) {
-                            const token = jwt.sign({ result }, process.env.ACCESS_TOKEN, {
-                                expiresIn: "1h"
-                            });
-                            res.cookie("token", token, {
-                                expires: new Date(Date.now() + 172800000),
-                                httpOnly: true
-                              }).status(200).json({notification: 'You successfully logged in', result})
-                        } else {
-                            res.json({notification: 'Username and password do not match'})
-                        }
-                    }
-                )
+                        const token = jwt.sign({ result }, process.env.ACCESS_TOKEN, {
+                            expiresIn: "1h"
+                        });
+                        res.cookie("token", token, {
+                            expires: new Date(Date.now() + 172800000),
+                            httpOnly: true})
+                            .status(200)
+                            .json({notification: 'You successfully logged in', result})
+                        })
+            }else {
+                res.json({notification: 'Invalid username or password'})
             }
         })
         .catch((err) => console.log(err))
@@ -71,14 +67,51 @@ const getUserById = (req, res) => {
 }
 
 const updateUsername = (req, res) => {
-    const id = req.user.result._id;
-    const name = { username: req.body.username }
-    User.findByIdAndUpdate(id, name, {new: true})
-        .then(result => {
-            res.status(200).json(result)
-        })
-        .catch(err => console.log(err))
-
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        res.status(400).json({errors: errors.array()})
+    }else {
+        const id = req.user.result._id;
+        const name = { username: req.body.username }
+        User.findByIdAndUpdate(id, name, {new: true})
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => console.log(err))
+    }
+    
 }
 
-module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername}
+const updateBirthday = (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        res.status(400).json({errors: errors.array()})
+    }else {
+        const id = req.user.result._id;
+        const birthday = {birthday: req.body.birthday}
+        
+        User.findByIdAndUpdate(id, birthday, {new: true})
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+const updatePhone = (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        res.status(400).json({errors: errors.array()})
+    }else {
+        const id = req.user.result._id;
+        const phone = { username: req.body.phoneNumber }
+        User.findByIdAndUpdate(id, phone, {new: true})
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => console.log(err))
+    }
+    
+}
+
+module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone }

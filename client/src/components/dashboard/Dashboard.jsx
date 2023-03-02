@@ -13,9 +13,9 @@ function Dashboard() {
       <Link to='/profile'><button className="btn btn-secondary m-1">Profile</button></Link>
       <button onClick={logout} className="btn btn-secondary m-1">Sign out</button>
     </div>
-    <div style={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', margin: '2rem auto', width: '80%'}}>
+    <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', margin: '2rem auto', width: '80%'}}>
     {users.length > 0 && users.map(user => 
-      <div className="card" style={{width: "18rem", display: 'flex', flexDirection: 'column'}}>
+      <div className="card m-1" style={{width: "18rem", display: 'flex', flexDirection: 'column'}}>
         <div className="card-body">
           <h5 className="card-subtitle mb-2 text-muted">{user.username}</h5>
           <span className="btn btn-primary" onClick={() => {setModal(true); getUserById(user)}}>See this user</span>
