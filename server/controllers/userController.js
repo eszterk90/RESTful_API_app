@@ -36,8 +36,11 @@ const login = (req, res) => {
                         if(response) {
                             const token = jwt.sign({ result }, process.env.ACCESS_TOKEN, {
                                 expiresIn: "1h"
-                            })
-                            res.status(200).json({notification: 'You successfully logged in', result, token})
+                            });
+                            res.cookie("token", token, {
+                                expires: new Date(Date.now() + 172800000),
+                                httpOnly: true
+                              }).status(200).json({notification: 'You successfully logged in', result})
                         } else {
                             res.json({notification: 'Username and password do not match'})
                         }
@@ -54,10 +57,7 @@ const logout = (req, res) => {
 }
 
 const getAllUsers = (req, res) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    const decodedUser = jwt.decode(token);
-    User.find({_id: { $ne: decodedUser.result._id }}).then(result => {
+    User.find({_id: { $ne: req.user.result._id }}).then(result => {
         res.json(result)
     })
     
@@ -70,4 +70,15 @@ const getUserById = (req, res) => {
         .catch(err => console.log(err))
 }
 
-module.exports = {createUser, login, logout, getAllUsers, getUserById}
+const updateUsername = (req, res) => {
+    const id = req.user.result._id;
+    const name = { username: req.body.username }
+    User.findByIdAndUpdate(id, name, {new: true})
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => console.log(err))
+
+}
+
+module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername}

@@ -12,17 +12,6 @@ export const UserProvider = ({children}) => {
     const [users, setUsers] = useState([]);
     const [profile, setProfile] = useState({});
 
-    axios.interceptors.request.use(
-        req => {
-          req.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-          console.log(req.headers.Authorization)
-          return req;
-        },
-        error => {
-          return Promise.reject(error);
-        }
-      )
-
     const inputHandler = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
       };
@@ -42,9 +31,8 @@ export const UserProvider = ({children}) => {
         e.preventDefault();
         axios.post("http://localhost:5001/user/login", formData, {withCredentials: true})
             .then((response, err) => {
-                if(response.data.token){
-                    localStorage.setItem('token', response.data.token);
-                    setCurrentUser(response.data.token)
+                if(response.data.result){
+                    setCurrentUser(response.data.result)
                 }
     
                 setNotifications([...notifications, response.data.notification])                   
@@ -86,7 +74,16 @@ export const UserProvider = ({children}) => {
             .catch(err => console.log(err))
     }
 
-    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile};
+    const updateUsername = (e) => {
+        e.preventDefault();
+        axios.patch("http://localhost:5001/user/updatename", formData, {withCredentials: true})
+            .then(response => {
+                setCurrentUser(response.data)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername};
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };
