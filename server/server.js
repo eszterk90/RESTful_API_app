@@ -4,6 +4,7 @@ require('dotenv').config();
 const PORT = process.env.PORT;
 const mongoose = require('mongoose');
 const cors = require('cors');
+const userRouter = require('./routes/userRouter')
 
 //middleware
 app.use(cors({origin: 'http://localhost:3000', credentials: true}));
@@ -16,6 +17,7 @@ mongoose.connect(process.env.DB_LINK)
     .catch((err) => console.log(err))
 
 //routes
+app.use('/user', userRouter);
 
 //run server on PORT
 const server = app.listen(PORT, () => {
