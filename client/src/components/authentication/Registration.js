@@ -37,9 +37,9 @@ function Registration() {
             required
             onChange={inputHandler}
             />
-            <label for="zipcode">Zip Code</label>
+            <label for="zipCode">Zip Code</label>
             <input
-            type="number"
+            type="text"
             id="zipCode"
             name="zipCode"
             placeholder="zip code"
@@ -48,11 +48,11 @@ function Registration() {
             />
             <label for="phone">Phone Number</label>
             <input
-            type="phone"
+            type="text"
             id="phone"
             name="phoneNumber"
             placeholder="phone"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            onChange={inputHandler}
             required
             />
             <input type="submit" value="sign up" name="sign up"/>
@@ -61,8 +61,7 @@ function Registration() {
         <Link to='/'><button>Home</button></Link>
         {notifications.length > 0 && 
             <div>
-                <span>{notifications[0]}</span>
-                <Link to="/"><button>Go to login</button></Link>
+                <span>{notifications[notifications.length -1]}</span>
             </div>}
     </>
   )

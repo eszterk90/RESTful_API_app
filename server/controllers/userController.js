@@ -1,9 +1,16 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require("express-validator");
 
 const createUser = (req, res) => {
-    const newUser = req.body;
+    const errors = validationResult(req);
+    console.log(errors)
+    if(!errors.isEmpty()) {
+        console.log(errors)
+        res.status(400).json({errors: errors.array()})
+    }else {
+        const newUser = req.body;
     User.findOne({username: newUser.username})
         .then(result => {
             if(result) {
@@ -14,6 +21,7 @@ const createUser = (req, res) => {
                     .catch(err => console.log(err))
             }
         }).catch(err => console.log(err))
+    }   
 }
 
 const login = (req, res) => {
@@ -31,7 +39,7 @@ const login = (req, res) => {
                             })
                             res.status(200).json({notification: 'You successfully logged in', result, token})
                         } else {
-                            res.json({notification: 'username and password do not match'})
+                            res.json({notification: 'Username and password do not match'})
                         }
                     }
                 )

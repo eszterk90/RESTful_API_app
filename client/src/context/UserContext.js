@@ -18,10 +18,12 @@ export const UserProvider = ({children}) => {
         e.preventDefault();
         axios.post("http://localhost:5001/user/create", formData, {withCredentials: true})
             .then(response => {
-                setNotifications([...notifications, response.data.notification])
+                if(response.data.notification) {
+                    setNotifications([...notifications, response.data.notification])
+                }
             })
-            .catch((err) => console.log(err))
-    }
+            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+        }
 
     const login = (e) => {
         e.preventDefault();
