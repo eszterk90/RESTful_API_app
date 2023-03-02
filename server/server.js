@@ -11,14 +11,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //database connection
-
 mongoose.connect(process.env.DB_LINK)
     .then(() => console.log('database is connected'))
     .catch((err) => console.log(err))
 
 //routes
-
-app.use('/user', userRouter);
 
 //run server on PORT
 const server = app.listen(PORT, () => {
