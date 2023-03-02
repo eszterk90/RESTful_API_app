@@ -1,0 +1,25 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "restful_API_app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eszterk90/RESTful_API_app.git"
+  },
+  "author": "eszter kadar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eszterk90/RESTful_API_app/issues"
+  },
+  "homepage": "https://github.com/eszterk90/RESTful_API_app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0"
+  }
+}
