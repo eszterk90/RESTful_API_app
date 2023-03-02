@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../models/userModel");
-const {createUser, login, logout} = require('../controllers/userController');
-const { check, body } = require('express-validator');
+const {createUser, login, logout, getAllUsers, getUserById} = require('../controllers/userController');
+const { check } = require('express-validator');
 
 router.post('/create',[
     check('username')
@@ -30,6 +29,8 @@ router.post('/create',[
 ], createUser);
 router.post('/login', login);
 router.get('/logout', logout);
+router.get('/all', getAllUsers);
+router.get('/:userId', getUserById)
 
 module.exports = router;
 

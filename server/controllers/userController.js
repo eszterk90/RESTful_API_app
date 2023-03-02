@@ -53,4 +53,21 @@ const logout = (req, res) => {
     res.json({notification: 'You logged out'})
 }
 
-module.exports = {createUser, login, logout}
+const getAllUsers = (req, res) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    const decodedUser = jwt.decode(token);
+    User.find({_id: { $ne: decodedUser.result._id }}).then(result => {
+        res.json(result)
+    })
+    
+}
+
+const getUserById = (req, res) => {
+    User.findById(req.params.userId)
+        .populate('_id')
+        .then(data => res.json(data))
+        .catch(err => console.log(err))
+}
+
+module.exports = {createUser, login, logout, getAllUsers, getUserById}

@@ -13,7 +13,7 @@ const {currentUser} = useContext(UserContext);
     {Object.keys(currentUser).length > 0 ? <Dashboard/> 
     :
     <>
-    <Link to='/register'><button>Sign up</button></Link>
+    <Link to='/register'><button className="btn btn-secondary">Sign up</button></Link>
     <Login/>
     </>
     }
