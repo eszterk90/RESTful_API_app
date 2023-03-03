@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone } = require('../controllers/userController');
+const {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode } = require('../controllers/userController');
 const {registerValidator} = require('../utils/validators');
 const {check} = require('express-validator');
 const { auth } = require('../middleware/authorization');
@@ -28,6 +28,13 @@ router.patch('/updatephone', check('phoneNumber')
     .withMessage('Phone number has to be at least 9 and maximum 11 characters.')
     .matches('^[0-9]*$')
     .withMessage('Phone number can only contain numbers'), auth, updatePhone)
+router.patch('/updatezip', check('zipCode')
+    .isLength({min: 4, max: 5})
+    .withMessage('Zipcode must be at least 4 characters and maximum 5 characters')
+    .matches('^[0-9]*$')
+    .withMessage('Zip code can only contain numbers'), auth, updateZipCode);
+
+//delete user
 
 module.exports = router;
 

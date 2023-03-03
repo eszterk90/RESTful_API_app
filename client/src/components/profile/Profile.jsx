@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 function Profile() {
 
-const {currentUser, inputHandler, updateUsername, setNotifications, updateBirthday, notifications, updatePhoneNumber} = useContext(UserContext);
+const {currentUser, inputHandler, updateUsername, setNotifications, updateBirthday, notifications, updatePhoneNumber, updateZipCode} = useContext(UserContext);
   return (
     <div>
     <div className="card" style={{width: "18rem", display: 'flex', flexDirection: 'column'}}>
@@ -26,6 +26,10 @@ const {currentUser, inputHandler, updateUsername, setNotifications, updateBirthd
             <input type="submit" value="update phone number" onClick={updatePhoneNumber}/>
           </form>
           <p className="card-text">Zip code: {currentUser.zipCode}</p>
+          <form>
+          <input onChange={inputHandler} name='zipCode'/>
+          <input type="submit" value="update zip code" onClick={updateZipCode}/>
+        </form>
         </div>
       </div>
       <Link to='/'><button type="button" className="btn btn-secondary" onClick={() => setNotifications([])}>Home</button></Link>

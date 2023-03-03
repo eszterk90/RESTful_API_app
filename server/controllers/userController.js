@@ -103,14 +103,28 @@ const updatePhone = (req, res) => {
         res.status(400).json({errors: errors.array()})
     }else {
         const id = req.user.result._id;
-        const phone = { username: req.body.phoneNumber }
+        const phone = { phoneNumber: req.body.phoneNumber }
         User.findByIdAndUpdate(id, phone, {new: true})
             .then(result => {
                 res.status(200).json(result)
             })
             .catch(err => console.log(err))
     }
-    
 }
 
-module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone }
+const updateZipCode = (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        res.status(400).json({errors: errors.array()})
+    }else {
+        const id = req.user.result._id;
+        const zipCode = { zipCode: req.body.zipCode }
+        User.findByIdAndUpdate(id, zipCode, {new: true})
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode }

@@ -103,7 +103,16 @@ export const UserProvider = ({children}) => {
 
     }
 
-    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber};
+    const updateZipCode = (e) => {
+        e.preventDefault();
+        axios.patch("http://localhost:5001/user/updatezip", formData, {withCredentials: true})
+            .then(response => {
+                setCurrentUser(response.data)
+            })
+            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+    }
+
+    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber, updateZipCode};
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };
