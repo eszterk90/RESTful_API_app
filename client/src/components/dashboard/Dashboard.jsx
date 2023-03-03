@@ -3,14 +3,14 @@ import UserContext from '../../context/UserContext'
 import {Link} from 'react-router-dom'
 
 function Dashboard() {
-    const {logout, users, getUserById, profile} = useContext(UserContext);
+    const {logout, users, getUserById, profile, setNotification} = useContext(UserContext);
 
     const [modal, setModal] = useState(false)
   return (
     <div>
     <h1 style={{textAlign: 'center'}}>User management board</h1>
     <div style={{display: 'flex', justifyContent: 'flex-end', margin: '0 auto', width: '90%'}}>
-      <Link to='/profile'><button className="btn btn-secondary m-1">Profile</button></Link>
+      <Link to='/profile'><button className="btn btn-secondary m-1" onClick={() =>setNotification({})}>Profile</button></Link>
       <button onClick={logout} className="btn btn-secondary m-1">Sign out</button>
     </div>
     <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', margin: '2rem auto', width: '80%'}}>

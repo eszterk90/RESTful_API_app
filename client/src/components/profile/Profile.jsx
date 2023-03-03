@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 function Profile() {
 
-const {currentUser, inputHandler, updateUsername, setNotifications, updateBirthday, notifications, updatePhoneNumber, updateZipCode, deleteUser} = useContext(UserContext);
+const {currentUser, inputHandler, updateUsername, setNotification, updateBirthday, notification, updatePhoneNumber, updateZipCode, deleteUser} = useContext(UserContext);
   return (
     <div>
     <div className="card" style={{width: "18rem", display: 'flex', flexDirection: 'column'}}>
@@ -32,9 +32,9 @@ const {currentUser, inputHandler, updateUsername, setNotifications, updateBirthd
         </form>
         </div>
       </div>
-      <Link to='/'><button type="button" className="btn btn-secondary" onClick={() => setNotifications([])}>Home</button></Link>
+      <Link to='/'><button type="button" className="btn btn-secondary" onClick={() => setNotification({})}>Home</button></Link>
       <Link to='/'><button className="btn btn-danger" onClick={deleteUser}>Delete user</button></Link>
-      {notifications && <span>{notifications[notifications.length-1]}</span>}
+      <span>{Object.keys(notification).length > 0 && notification}</span>
       </div>
   )
 }

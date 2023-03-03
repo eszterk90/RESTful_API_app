@@ -7,7 +7,7 @@ const UserContext = createContext();
 export const UserProvider = ({children}) => {
 
     const [formData, setFormData] = useState({})
-    const [notifications, setNotifications] = useState([])
+    const [notification, setNotification] = useState({})
     const [currentUser, setCurrentUser] = useLocalStorage('currentUser', {})
     const [users, setUsers] = useState([]);
     const [profile, setProfile] = useState({});
@@ -21,10 +21,10 @@ export const UserProvider = ({children}) => {
         axios.post("http://localhost:5001/user/create", formData, {withCredentials: true})
             .then(response => {
                 if(response.data.notification) {
-                    setNotifications([...notifications, response.data.notification])
+                    setNotification(response.data.notification)
                 }
             })
-            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+            .catch((err) => setNotification(err.response.data.errors[0].msg))
     }
 
     const login = (e) => {
@@ -35,7 +35,7 @@ export const UserProvider = ({children}) => {
                     setCurrentUser(response.data.result)
                 }
     
-                setNotifications([...notifications, response.data.notification])                   
+                setNotification(response.data.notification)                   
             }).catch(err => console.log(err))
     }
 
@@ -43,7 +43,7 @@ export const UserProvider = ({children}) => {
         axios.get("http://localhost:5001/user/logout", {withCredentials: true})
           .then(() => {
             setCurrentUser({});
-            setNotifications([]);
+            setNotification({});
             localStorage.clear();
           })
           .catch((err) => console.log(err));
@@ -78,7 +78,7 @@ export const UserProvider = ({children}) => {
             .then(response => {
                 setCurrentUser(response.data)
             })
-            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+            .catch((err) => setNotification(err.response.data.errors[0].msg))
     }
 
     const updateBirthday = (e) => {
@@ -87,7 +87,7 @@ export const UserProvider = ({children}) => {
             .then(response => {
                 setCurrentUser(response.data)
             })
-            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+            .catch((err) => setNotification(err.response.data.errors[0].msg))
 
     }
 
@@ -97,7 +97,7 @@ export const UserProvider = ({children}) => {
             .then(response => {
                 setCurrentUser(response.data)
             })
-            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+            .catch((err) => setNotification(err.response.data.errors[0].msg))
 
     }
 
@@ -107,18 +107,18 @@ export const UserProvider = ({children}) => {
             .then(response => {
                 setCurrentUser(response.data)
             })
-            .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
+            .catch((err) => setNotification(err.response.data.errors[0].msg))
     }
 
     const deleteUser = () => {
         axios.delete('http://localhost:5001/user/delete', {withCredentials: true})
             .then(response => {
                 setCurrentUser({})
-                setNotifications([...notifications, response.data.notification])
+                setNotification(response.data.notification)
             })
     }
 
-    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber, updateZipCode, deleteUser};
+    const value = {inputHandler, createAccount, notification, setNotification,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber, updateZipCode, deleteUser};
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };

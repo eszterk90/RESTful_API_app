@@ -4,13 +4,13 @@ import {Link} from 'react-router-dom'
 
 function Registration() {
 
-const {createAccount, inputHandler, notifications, setNotifications} = useContext(UserContext)
+const {createAccount, inputHandler, notification, setNotification} = useContext(UserContext)
 
   return (
     <>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
           <h1>Registration</h1>
-          <Link to='/'><button type="button" className="btn btn-secondary" onClick={() => setNotifications([])}>Home</button></Link>
+          <Link to='/'><button type="button" className="btn btn-secondary" onClick={() => setNotification({})}>Back to login</button></Link>
         </div>
         <div style={{width: '50%', margin: '0 auto'}}>
         <form onSubmit={createAccount}>
@@ -77,9 +77,9 @@ const {createAccount, inputHandler, notifications, setNotifications} = useContex
         <input type="submit" value="sign up" name="sign up" className="btn btn-primary"/>
         </form>
         <div>
-        {notifications.length > 0 && 
+        {Object.keys(notification).length > 0 && 
             <div>
-                <span>{notifications[notifications.length -1]}</span>
+                <span>{notification}</span>
             </div>}
         </div>
         </div>

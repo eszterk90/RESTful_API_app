@@ -3,7 +3,7 @@ import UserContext from '../../context/UserContext';
 
 function Login() {
 
-    const {inputHandler, login, notifications} = useContext(UserContext);
+    const {inputHandler, login, notification} = useContext(UserContext);
   return (
     <>
       <h1 style={{textAlign: 'center'}}>Sign in here</h1>
@@ -38,9 +38,9 @@ function Login() {
         </form>
       </div>
         
-        {notifications.length > 0 && 
+        {Object.keys(notification).length > 0 && 
         <div>
-        <span>{notifications[notifications.length -1]}</span>
+        <span>{notification}</span>
         </div>}
 
     </>
