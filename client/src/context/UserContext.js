@@ -40,7 +40,7 @@ export const UserProvider = ({children}) => {
     }
 
     const logout = () => {
-        axios.get("http://localhost:5001/user/logout")
+        axios.get("http://localhost:5001/user/logout", {withCredentials: true})
           .then(() => {
             setCurrentUser({});
             setNotifications([]);

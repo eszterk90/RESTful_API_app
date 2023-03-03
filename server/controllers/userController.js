@@ -36,10 +36,10 @@ const login = (req, res) => {
                         });
                         res.cookie("token", token, {
                             expires: new Date(Date.now() + 172800000),
-                            httpOnly: true})
+                            httpOnly: true, path: '/', domain: 'localhost'})
                             .status(200)
                             .json({notification: 'You successfully logged in', result})
-                        })
+                    })
             }else {
                 res.json({notification: 'Invalid username or password'})
             }
@@ -48,8 +48,7 @@ const login = (req, res) => {
 }
 
 const logout = (req, res) => {
-    res.cookie('jwt', '', {maxAge: 1})
-    res.json({notification: 'You logged out'})
+    res.clearCookie('token', {domain: 'localhost', path: '/'}).json({notification: 'You logged out'})
 }
 
 const getAllUsers = (req, res) => {

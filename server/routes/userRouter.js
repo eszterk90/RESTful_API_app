@@ -16,18 +16,18 @@ router.get('/:userId', getUserById);
 
 //update user data
 router.patch('/updatename', check('username')
-.notEmpty()
-.withMessage('Username cannot be empty')
-.isLength({min: 5})
-.withMessage('Username must be at least 5 characters.'), auth, updateUsername);
+    .notEmpty()
+    .withMessage('Username cannot be empty')
+    .isLength({min: 5})
+    .withMessage('Username must be at least 5 characters.'), auth, updateUsername);
 router.patch('/updatebirthday', check('birthday')
-.isISO8601().toDate()
-.withMessage('Date of birth a real date in YYYY-MM-DD format'), auth, updateBirthday);
+    .isISO8601().toDate()
+    .withMessage('Date of birth a real date in YYYY-MM-DD format'), auth, updateBirthday);
 router.patch('/updatephone', check('phoneNumber')
-.isLength({min: 9, max:13})
-.withMessage('Phone number has to be at least 9 and maximum 11 characters.')
-.matches('^[0-9]*$')
-.withMessage('Phone number can only contain numbers'), auth, updatePhone)
+    .isLength({min: 9, max:13})
+    .withMessage('Phone number has to be at least 9 and maximum 11 characters.')
+    .matches('^[0-9]*$')
+    .withMessage('Phone number can only contain numbers'), auth, updatePhone)
 
 module.exports = router;
 
