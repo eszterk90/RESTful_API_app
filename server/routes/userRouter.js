@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode, deleteUserById } = require('../controllers/userController');
+const {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode, deleteUserById, filterUserByQuery } = require('../controllers/userController');
 const {registerValidator} = require('../utils/validators');
 const {check} = require('express-validator');
 const { auth } = require('../middleware/authorization');

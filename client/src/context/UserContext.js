@@ -11,6 +11,11 @@ export const UserProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useLocalStorage('currentUser', {})
     const [users, setUsers] = useState([]);
     const [profile, setProfile] = useState({});
+    const [search, setSearch] = useState('');
+    const [page, setPage] = useState(1);
+    const [sort, setSort] = useState({sort: '_id', order: 'desc'});
+    const [total, setTotal] = useState(0);
+    const [limit, setLimit] = useState(0);
 
     const inputHandler = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -50,9 +55,11 @@ export const UserProvider = ({children}) => {
     };
 
     const getAllUsers = () => {
-        axios.get("http://localhost:5001/user/all", {withCredentials: true})
+        axios.get(`http://localhost:5001/user/all?page=${page}&sort=${sort.sort},${sort.order}&search=${search}`, {withCredentials: true})
         .then(response => {
-            setUsers(response.data)
+            setUsers(response.data.users);
+            setTotal(response.data.total);
+            setLimit(response.data.limit);
         }
         )
     }
@@ -61,7 +68,7 @@ export const UserProvider = ({children}) => {
         if(Object.keys(currentUser).length > 0) {
             getAllUsers()
         }
-    }, [currentUser])
+    }, [currentUser, search, page, sort])
 
     const getUserById = (user) => {
         const userId = user._id;
@@ -118,7 +125,8 @@ export const UserProvider = ({children}) => {
             })
     }
 
-    const value = {inputHandler, createAccount, notification, setNotification,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber, updateZipCode, deleteUser};
+
+    const value = {inputHandler, createAccount, notification, setNotification,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber, updateZipCode, deleteUser, getAllUsers, setSearch, total, page, setPage, limit, sort, setSort};
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };
