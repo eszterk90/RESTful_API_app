@@ -1,4 +1,3 @@
-const express = require('express');
 const {check} = require('express-validator');
 
 const registerValidator = () => {
@@ -13,7 +12,9 @@ const registerValidator = () => {
             .withMessage('Password must be at least 6 characters'),
         check('birthday')
             .isISO8601().toDate()
-            .withMessage('Date of birth a real date in YYYY-MM-DD format'),
+            .withMessage('Date of birth a real date in YYYY-MM-DD format')
+            .custom(value => value < new Date())
+            .withMessage('Date of birth has to be in the past'),
         check('zipCode')
             .isLength({min: 4, max: 5})
             .withMessage('Zipcode must be at least 4 characters and maximum 5 characters')
@@ -24,7 +25,6 @@ const registerValidator = () => {
             .withMessage('Phone number has to be at least 9 and maximum 11 characters.')
             .matches('^[0-9]*$')
             .withMessage('Phone number can only contain numbers')
-    
     ];
 }
 

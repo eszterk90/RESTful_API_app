@@ -2,19 +2,20 @@ import React, {useContext} from 'react'
 import UserContext from '../../context/UserContext'
 
 function Sort() {
-    const {sort, setSort} = useContext(UserContext)
+const {sort, setSort} = useContext(UserContext)
 
-    const onSelectChange = ({currentTarget: input}) => {
-        setSort({sort: input.value, order: sort.order});
-    }
+const onSelectChange = ({currentTarget: input}) => {
+    setSort({sort: input.value, order: sort.order});
+}
 
-    const onArrowChange = () => {
-        if(sort.order === 'asc') {
-            setSort({sort: sort.sort, order: 'desc'});
-        }else {
-            setSort({sort: sort.sort, order: 'asc'});
-        }
+const onArrowChange = () => {
+    if(sort.order === 'asc') {
+        setSort({sort: sort.sort, order: 'desc'});
+    }else {
+        setSort({sort: sort.sort, order: 'asc'});
     }
+}
+
   return (
     <div style={{display: 'flex', width: '250px'}} className='m-2'>
         <p className='m-2'>Sort by:</p>

@@ -3,12 +3,13 @@ import UserContext from '../../context/UserContext';
 
 function Login() {
 
-    const {inputHandler, login, notification} = useContext(UserContext);
+  const {inputHandler, login, notification} = useContext(UserContext);
   return (
     <>
-      <h1 style={{textAlign: 'center'}}>Sign in here</h1>
+    <h1 style={{textAlign: 'center'}}>Sign in here</h1>
       <div style={{width: '50%', margin: '0 auto'}}>
         <form onSubmit={login} style={{display: 'flex', flexDirection: 'column', width: '80%', margin: '0 auto'}}>
+
         <div className="mb-3">
           <label for="username" className="form-label">Username</label>
           <input
@@ -18,7 +19,8 @@ function Login() {
             onChange={inputHandler}
             className="form-control"
           />
-        </div>   
+        </div>
+
         <div className="mb-3">
           <label for="password" className="form-label">Password</label>
           <input
@@ -28,7 +30,8 @@ function Login() {
             onChange={inputHandler}
             className="form-control"
           />
-        </div> 
+        </div>
+
         <input
           type="submit"
           value="sign in"
@@ -38,11 +41,10 @@ function Login() {
         </form>
       </div>
         
-        {Object.keys(notification).length > 0 && 
-        <div>
+      {Object.keys(notification).length > 0 && 
+      <div>
         <span>{notification}</span>
-        </div>}
-
+      </div>}
     </>
   )
 }

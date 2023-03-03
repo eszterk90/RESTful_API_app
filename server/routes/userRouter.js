@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode, deleteUserById, filterUserByQuery } = require('../controllers/userController');
+const {
+    createUser, 
+    login, 
+    logout, 
+    getAllUsers, 
+    getUserById, 
+    updateUsername, 
+    updateBirthday, 
+    updatePhone, 
+    updateZipCode, 
+    deleteUserById
+} = require('../controllers/userController');
 const {registerValidator} = require('../utils/validators');
 const {check} = require('express-validator');
 const { auth } = require('../middleware/authorization');
@@ -22,12 +33,15 @@ router.patch('/updatename', check('username')
     .withMessage('Username must be at least 5 characters.'), auth, updateUsername);
 router.patch('/updatebirthday', check('birthday')
     .isISO8601().toDate()
-    .withMessage('Date of birth a real date in YYYY-MM-DD format'), auth, updateBirthday);
+    .withMessage('Date of birth a real date in YYYY-MM-DD format')
+    .custom(value => value < new Date())
+    .withMessage('Date of birth has to be in the past'), auth, updateBirthday);
+   
 router.patch('/updatephone', check('phoneNumber')
     .isLength({min: 9, max:13})
     .withMessage('Phone number has to be at least 9 and maximum 11 characters.')
     .matches('^[0-9]*$')
-    .withMessage('Phone number can only contain numbers'), auth, updatePhone)
+    .withMessage('Phone number can only contain numbers'), auth, updatePhone);
 router.patch('/updatezip', check('zipCode')
     .isLength({min: 4, max: 5})
     .withMessage('Zipcode must be at least 4 characters and maximum 5 characters')

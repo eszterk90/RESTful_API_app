@@ -15,8 +15,8 @@ const createUser = (req, res) => {
                 res.json({notification: 'Account already exists'})
             }else {
                 User.create(newUser)
-                    .then(() => res.status(200).json({notification: 'Your account is created'}))
-                    .catch(err => console.log(err))
+                .then(() => res.status(200).json({notification: 'Your account is created'}))
+                .catch(err => console.log(err))
             }
         }).catch(err => console.log(err))
     }   
@@ -52,7 +52,9 @@ const login = (req, res) => {
 }
 
 const logout = (req, res) => {
-    res.clearCookie('token', {domain: 'localhost', path: '/'}).json({notification: 'You logged out'})
+    res.
+    clearCookie('token', {domain: 'localhost', path: '/'})
+    .json({notification: 'You logged out'})
 }
 
 const getAllUsers = async (req, res) => {
@@ -71,7 +73,6 @@ const getAllUsers = async (req, res) => {
         }
 
         const users = await User.find({$and: [{_id: { $ne: req.user.result._id }}, {"username": {$regex: search, $options: 'i'}}]}).sort(sortBy).skip(page * limit).limit(limit);
-
         const total = await User.countDocuments({$and: [{_id: { $ne: req.user.result._id }}, {"username": {$regex: search, $options: 'i'}}]})
 
         const result = {
@@ -104,10 +105,10 @@ const updateUsername = (req, res) => {
         const id = req.user.result._id;
         const name = { username: req.body.username }
         User.findByIdAndUpdate(id, name, {new: true})
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(err => console.log(err))
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => console.log(err))
     }   
 }
 
@@ -120,10 +121,10 @@ const updateBirthday = (req, res) => {
         const birthday = {birthday: req.body.birthday}
         
         User.findByIdAndUpdate(id, birthday, {new: true})
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(err => console.log(err))
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => console.log(err))
     }
 }
 
@@ -135,10 +136,10 @@ const updatePhone = (req, res) => {
         const id = req.user.result._id;
         const phone = { phoneNumber: req.body.phoneNumber }
         User.findByIdAndUpdate(id, phone, {new: true})
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(err => console.log(err))
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => console.log(err))
     }
 }
 
@@ -150,10 +151,10 @@ const updateZipCode = (req, res) => {
         const id = req.user.result._id;
         const zipCode = { zipCode: req.body.zipCode }
         User.findByIdAndUpdate(id, zipCode, {new: true})
-            .then(result => {
-                res.status(200).json(result)
-            })
-            .catch(err => console.log(err))
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(err => console.log(err))
     }
 }
 
@@ -161,9 +162,21 @@ const deleteUserById = (req, res) => {
     const id = req.user.result._id;
     User.findByIdAndDelete(id)
     .then(() => {
-        res.clearCookie('token', {domain: 'localhost', path: '/'}).json({notification: 'You deleted your user'})
+        res
+        .clearCookie('token', {domain: 'localhost', path: '/'})
+        .json({notification: 'You deleted your user'})
     })
-
 }
 
-module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode, deleteUserById }
+module.exports = {
+    createUser, 
+    login, 
+    logout, 
+    getAllUsers, 
+    getUserById, 
+    updateUsername, 
+    updateBirthday, 
+    updatePhone, 
+    updateZipCode, 
+    deleteUserById 
+}

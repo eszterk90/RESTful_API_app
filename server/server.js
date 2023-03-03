@@ -15,13 +15,13 @@ app.use(cookieParser());
 
 //database connection
 mongoose.connect(process.env.DB_LINK)
-    .then(() => console.log('database is connected'))
-    .catch((err) => console.log(err))
+.then(() => console.log('database is connected'))
+.catch((err) => console.log(err))
 
 //routes
 app.use('/user', userRouter);
 
-//run server on PORT
+//run server on localhost
 const server = app.listen(PORT, () => {
     console.log("listening on port " + PORT);
 });
