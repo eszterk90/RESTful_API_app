@@ -12,10 +12,11 @@ const {currentUser, setNotification} = useContext(UserContext);
     <div>
     {Object.keys(currentUser).length > 0 ? <Dashboard/> 
     :
-    <>
-    <Link to='/register'><button className="btn btn-secondary" onClick={() => setNotification({})}>Sign up</button></Link>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
     <Login/>
-    </>
+    <span>OR</span>
+    <Link to='/register'><button className="btn btn-secondary m-1" style={{width: '295px'}} onClick={() => setNotification({})}>Create an account</button></Link>
+    </div>
     }
         
     </div>

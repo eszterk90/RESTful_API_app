@@ -8,12 +8,11 @@ const {createAccount, inputHandler, notification, setNotification} = useContext(
 
   return (
     <>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <h1>Registration</h1>
-          <Link to='/'><button type="button" className="btn btn-secondary" onClick={() => setNotification({})}>Back to login</button></Link>
+        <div>
+          <h1 style={{textAlign: "center"}}>Registration</h1>
         </div>
         <div style={{width: '50%', margin: '0 auto'}}>
-        <form onSubmit={createAccount}>
+        <form onSubmit={createAccount} style={{display: 'flex', flexDirection: 'column'}}>
         <div className="mb-3">
           <label for="username" className="form-label">Username</label>
           <input
@@ -44,7 +43,7 @@ const {createAccount, inputHandler, notification, setNotification} = useContext(
             type="text"
             id="birthday"
             name="birthday"
-            placeholder="birthday"
+            placeholder="YYYY-MM-DD"
             required
             onChange={inputHandler}
             className="form-control"
@@ -56,7 +55,7 @@ const {createAccount, inputHandler, notification, setNotification} = useContext(
             type="text"
             id="zipCode"
             name="zipCode"
-            placeholder="zip code"
+            placeholder="e.g. 12345"
             required
             onChange={inputHandler}
             className="form-control"
@@ -68,14 +67,15 @@ const {createAccount, inputHandler, notification, setNotification} = useContext(
             type="text"
             id="phone"
             name="phoneNumber"
-            placeholder="phone"
+            placeholder="e.g. 1234567890"
             onChange={inputHandler}
             required
             className="form-control"
           />
         </div>   
-        <input type="submit" value="sign up" name="sign up" className="btn btn-primary"/>
+        <input type="submit" value="sign up" name="sign up" className="btn btn-primary m-1"/>
         </form>
+        <Link to='/'><button type="button" className="btn btn-secondary m-1" onClick={() => setNotification({})}>Back to login</button></Link>
         <div>
         {Object.keys(notification).length > 0 && 
             <div>
