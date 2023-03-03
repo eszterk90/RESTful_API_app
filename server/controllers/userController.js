@@ -31,17 +31,21 @@ const login = (req, res) => {
                     loginData.password,
                     result.password,
                     (err, response) => {
-                        const token = jwt.sign({ result }, process.env.ACCESS_TOKEN, {
-                            expiresIn: "1h"
-                        });
-                        res.cookie("token", token, {
-                            expires: new Date(Date.now() + 172800000),
-                            httpOnly: true, path: '/', domain: 'localhost'})
-                            .status(200)
-                            .json({notification: 'You successfully logged in', result})
+                        if(response) {
+                            const token = jwt.sign({ result }, process.env.ACCESS_TOKEN, {
+                                expiresIn: "1h"
+                            });
+                            res.cookie("token", token, {
+                                expires: new Date(Date.now() + 172800000),
+                                httpOnly: true, path: '/', domain: 'localhost'})
+                                .status(200)
+                                .json({notification: 'You successfully logged in', result})
+                        }else {
+                            res.json({notification: 'Incorrect password'})
+                        }
                     })
             }else {
-                res.json({notification: 'Invalid username or password'})
+                res.json({notification: 'Incorrect username'})
             }
         })
         .catch((err) => console.log(err))
