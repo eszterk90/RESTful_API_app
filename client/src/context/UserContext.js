@@ -52,7 +52,6 @@ export const UserProvider = ({children}) => {
     const getAllUsers = () => {
         axios.get("http://localhost:5001/user/all", {withCredentials: true})
         .then(response => {
-            console.log(response.data)
             setUsers(response.data)
         }
         )
@@ -69,7 +68,6 @@ export const UserProvider = ({children}) => {
         axios.get(`http://localhost:5001/user/${userId}`, {withCredentials: true})
             .then(response => {
                 setProfile(response.data)
-                console.log(response.data)
             })
             .catch(err => console.log(err))
     }
@@ -112,7 +110,15 @@ export const UserProvider = ({children}) => {
             .catch((err) => setNotifications([...notifications, err.response.data.errors[0].msg]))
     }
 
-    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber, updateZipCode};
+    const deleteUser = () => {
+        axios.delete('http://localhost:5001/user/delete', {withCredentials: true})
+            .then(response => {
+                setCurrentUser({})
+                setNotifications([...notifications, response.data.notification])
+            })
+    }
+
+    const value = {inputHandler, createAccount, notifications, setNotifications,login, currentUser, logout, users, getUserById, profile, updateUsername, updateBirthday, updatePhoneNumber, updateZipCode, deleteUser};
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 };

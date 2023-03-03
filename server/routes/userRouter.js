@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode } = require('../controllers/userController');
+const {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode, deleteUserById } = require('../controllers/userController');
 const {registerValidator} = require('../utils/validators');
 const {check} = require('express-validator');
 const { auth } = require('../middleware/authorization');
@@ -35,6 +35,7 @@ router.patch('/updatezip', check('zipCode')
     .withMessage('Zip code can only contain numbers'), auth, updateZipCode);
 
 //delete user
+router.delete('/delete', auth, deleteUserById)
 
 module.exports = router;
 

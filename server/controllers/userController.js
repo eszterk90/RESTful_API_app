@@ -127,4 +127,13 @@ const updateZipCode = (req, res) => {
     }
 }
 
-module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode }
+const deleteUserById = (req, res) => {
+    const id = req.user.result._id;
+    User.findByIdAndDelete(id)
+    .then(() => {
+        res.clearCookie('token', {domain: 'localhost', path: '/'}).json({notification: 'You deleted your user'})
+    })
+
+}
+
+module.exports = {createUser, login, logout, getAllUsers, getUserById, updateUsername, updateBirthday, updatePhone, updateZipCode, deleteUserById }
