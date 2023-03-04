@@ -16,9 +16,8 @@ const createUser = (req, res) => {
             }else {
                 User.create(newUser)
                 .then(() => res.status(200).json({notification: 'Your account is created'}))
-                .catch(err => console.log(err))
             }
-        }).catch(err => console.log(err))
+        }).catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
     }   
 }
 
@@ -48,7 +47,7 @@ const login = (req, res) => {
             res.json({notification: 'Incorrect username'})
         }
     })
-    .catch((err) => console.log(err))
+    .catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
 }
 
 const logout = (req, res) => {
@@ -86,7 +85,7 @@ const getAllUsers = async (req, res) => {
         res.status(200).json(result)
 
     }catch(err) {
-        res.status(500).json({error: true, message: 'Internal server error'});
+        res.status(500).json({error: true, notification: 'Internal server error'});
     }
 }
 
@@ -94,7 +93,7 @@ const getUserById = (req, res) => {
     User.findById(req.params.userId)
         .populate('_id')
         .then(data => res.json(data))
-        .catch(err => console.log(err))
+        .catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
 }
 
 const updateUsername = (req, res) => {
@@ -108,7 +107,7 @@ const updateUsername = (req, res) => {
         .then(result => {
             res.status(200).json(result)
         })
-        .catch(err => console.log(err))
+        .catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
     }   
 }
 
@@ -124,7 +123,7 @@ const updateBirthday = (req, res) => {
         .then(result => {
             res.status(200).json(result)
         })
-        .catch(err => console.log(err))
+        .catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
     }
 }
 
@@ -139,7 +138,7 @@ const updatePhone = (req, res) => {
         .then(result => {
             res.status(200).json(result)
         })
-        .catch(err => console.log(err))
+        .catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
     }
 }
 
@@ -154,7 +153,7 @@ const updateZipCode = (req, res) => {
         .then(result => {
             res.status(200).json(result)
         })
-        .catch(err => console.log(err))
+        .catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
     }
 }
 
@@ -166,6 +165,7 @@ const deleteUserById = (req, res) => {
         .clearCookie('token', {domain: 'localhost', path: '/'})
         .json({notification: 'You deleted your user'})
     })
+    .catch(() => res.status(500).json({error: true, message: 'Internal server error'}))
 }
 
 module.exports = {

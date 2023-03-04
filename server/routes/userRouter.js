@@ -35,8 +35,7 @@ router.patch('/updatebirthday', check('birthday')
     .isISO8601().toDate()
     .withMessage('Date of birth a real date in YYYY-MM-DD format')
     .custom(value => value < new Date())
-    .withMessage('Date of birth has to be in the past'), auth, updateBirthday);
-   
+    .withMessage('Date of birth has to be in the past'), auth, updateBirthday);  
 router.patch('/updatephone', check('phoneNumber')
     .isLength({min: 9, max:13})
     .withMessage('Phone number has to be at least 9 and maximum 11 characters.')
