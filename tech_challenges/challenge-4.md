@@ -59,7 +59,7 @@ const logSchema = new Schema({
 const Log = mongoose.model('Log', logSchema);
 ````
 
-Define function to log updates and deletes for a generic table:
+For generic implementation, define a function to log updates and deletes:
 
 ````
 const logUpdateDelete = async(table_name, record_id, previous_value, new_value, additional_info) {
