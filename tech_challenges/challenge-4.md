@@ -79,7 +79,7 @@ To log an update to the users table and create a new entry in the "Log" collecti
 logUpdateDelete('users', 1, 'Eszter', 'Barka', 'Update name');
 ````
 
-To get all updates and deletes for a given table sorting by timestamps in descending order:
+To get all updates and deletes for a given table sorting by timestamps in descending order, create getUpdates() function:
 
 ````
 const getUpdates = async(table_name, record_id) {
