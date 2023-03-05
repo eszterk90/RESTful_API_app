@@ -30,7 +30,7 @@ This user data management MERN app is used to perform CRUD operations and to sor
 
 ## How to install and run the app
 
-- Fork and then clone this repository
+- Clone this repository
   
 ### Run the backend locally
 - navigate to /server directory and `npm install` to install dependencies for the backend
