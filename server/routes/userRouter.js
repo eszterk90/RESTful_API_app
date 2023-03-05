@@ -19,7 +19,7 @@ const { auth } = require('../middleware/authorization');
 //create and auth user
 router.post('/create',registerValidator(), createUser);
 router.post('/login', login);
-router.get('/logout', logout);
+router.get('/logout', auth, logout);
 
 //retrieve user data
 router.get('/all', auth, getAllUsers);

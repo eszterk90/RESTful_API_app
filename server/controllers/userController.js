@@ -59,7 +59,7 @@ const logout = (req, res) => {
 const getAllUsers = async (req, res) => {
     try {
         const page = parseInt(req.query.page) -1 || 0;
-        const limit = parseInt(req.query.limit) || 5;
+        const limit = 5;
         const search = req.query.search || '';
         let sort = req.query.sort || '_id';
         req.query.sort ? (sort = req.query.sort.split(',')) : (sort = [sort]);
