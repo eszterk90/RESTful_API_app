@@ -41,7 +41,7 @@ Bonus question:
 ```
 ## Solution
 
-Define schema for log entries:
+First I would define a schema for log entries:
 
 ````
 const mongoose = require('mongoose);
@@ -59,7 +59,7 @@ const logSchema = new Schema({
 const Log = mongoose.model('Log', logSchema);
 ````
 
-Define function to log updates and deletes for a generic table:
+After that, I would create a function to log updates and deletes for a generic table:
 
 ````
 const logUpdateDelete = async(table_name, record_id, previous_value, new_value, additional_info) {
@@ -74,12 +74,12 @@ const logUpdateDelete = async(table_name, record_id, previous_value, new_value, 
 }
 ````
 
-To log an update to the users table and create a new entry in the "Log" collection, call logUpdateDelete() function and pass the table name, record ID, previous value, new value and additional information as arguments:
+To log an update to the users table and create a new entry in the "Log" collection, call logUpdateDelete() function and pass the table name, record ID, previous value, new value and additional information as arguments, like in the example below:
 ````
 logUpdateDelete('users', 1, 'Eszter', 'Barka', 'Update name');
 ````
 
-To get all updates and deletes for a given table sorting by timestamps in descending order:
+I would create a function 'getUpdates' to get all updates and deletes for a given table sorted by timestamps in descending order.
 
 ````
 const getUpdates = async(table_name, record_id) {
